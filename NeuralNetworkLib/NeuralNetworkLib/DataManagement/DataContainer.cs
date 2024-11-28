@@ -16,6 +16,7 @@ public struct NeuronInputCount
 public class DataContainer
 {
     public static Sim2Graph graph;
+    public static Random random = new Random();
 
     public static Dictionary<uint, SimAgent<IVector, ITransform<IVector>>> Agents =
         new Dictionary<uint, SimAgent<IVector, ITransform<IVector>>>();
@@ -199,5 +200,27 @@ public class DataContainer
 
         throw new KeyNotFoundException(
             $"The value '{value}' is not present in the brainTypes dictionary for agent type '{agentType}'.");
+    }
+    
+
+    public static INode<IVector> GetRandomPositionInLowerQuarter()
+    {
+        int x = random.Next(0, graph.MaxX);
+        int y = random.Next(1, graph.MaxY / 4);
+        return DataContainer.graph.NodesType[x, y];
+    }
+
+    public static INode<IVector> GetRandomPositionInUpperQuarter()
+    {
+        int x = random.Next(0, graph.MaxX);
+        int y = random.Next(3 * graph.MaxY / 4, graph.MaxY-1);
+        return DataContainer.graph.NodesType[x, y];
+    }
+
+    public static INode<IVector> GetRandomPosition()
+    {
+        int x = random.Next(0, graph.MaxX);
+        int y = random.Next(0, graph.MaxY);
+        return DataContainer.graph.NodesType[x, y];
     }
 }
